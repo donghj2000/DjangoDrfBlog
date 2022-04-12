@@ -1,0 +1,9 @@
+{
+    "python.autoComplete.extraPaths": [
+        "D:\\Anaconda3\\envs\\VueBlog\\Lib\\site-packages",
+        "D:\\Anaconda3\\envs\\VueBlog\\Scripts",
+        ],
+    "python.jediEnabled": true,
+    "python.languageServer": "Jedi",
+    "justMyCode":"false",
+}

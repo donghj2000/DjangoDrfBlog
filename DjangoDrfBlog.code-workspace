@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\envs\\VueBlog\\Lib\\site-packages\\django"
+		},
+		{
+			"path": "..\\..\\..\\envs\\VueBlog\\Lib\\site-packages\\rest_framework"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "..\\..\\..\\envs\\VueBlog\\Lib\\site-packages\\drf_haystack"
+		},
+		{
+			"path": "..\\..\\..\\envs\\VueBlog\\Lib\\site-packages\\haystack"
+		},
+	],
+	"settings": {}
+}

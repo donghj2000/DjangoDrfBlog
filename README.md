@@ -18,8 +18,8 @@ pip freeze > requirements.txt
 ```
 ### 执行数据库迁移
 ```
-python manager.py mkmigrations
-python manager.py migrate
+python manage.py mkmigrations
+python manage.py migrate
 ```
 ### 注册新用户时通过邮箱激活，需要配置邮箱服务器。也可以修改代码，去掉激活功能。
 ```

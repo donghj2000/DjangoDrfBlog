@@ -2,6 +2,11 @@
 基于django+restframework的博客后端，包括注册/登录，个人信息修改，文章列表，全文搜索等。
 需要python 3.6 以上。
 
+### vscode调试
+```
+在项目根目录下创建.vscode文件夹，将DjangoDrfBlog.code-workspace， launch.json， settings.json拷入其中， 即可调试。
+```
+
 ### 创建虚拟环境
 ```
 自行创建，也可以不创建。

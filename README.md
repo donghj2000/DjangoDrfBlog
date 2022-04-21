@@ -96,8 +96,8 @@ make
 make install
 
 配置文件  /usr/local/nginx/conf/nginx.conf
-# 配置了3个前端端口 80,81,82分别对应vue,react,react_koa前端
-# 配置了2个业务服务器端口 8000，3000，分别对应django,koa后端服务
+配置了3个前端端口 80,81,82分别对应vue,react,react_koa前端
+配置了2个业务服务器端口 8000，3000，分别对应django,koa后端服务
 如果要开启ssl，需要申请证书。测试环境下可以自己生成证书
 
 查看防火墙是否关闭

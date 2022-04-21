@@ -31,8 +31,6 @@ spec:
     volumeMounts:
     - name: uwsgi-data
       mountPath: /home/donghj/blog
-  nodeSelector:
-    disktype: ssd
   volumes:
   - name: nginx-conf
     hostPath: 

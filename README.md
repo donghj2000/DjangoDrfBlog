@@ -136,7 +136,22 @@ ps aux | grep uwsgi
 killall -s INT /usr/local/bin/uwsgi
 ```
 
-
-
+### docker 安装
 ```
+安装 docker-ce　...
+安装 Docker Compose ...
+
+生成镜像
+cd docker_k8s
+docker build -t mypython:v1 .
+运行镜像:
+docker-compose up
+访问：http://192.168.1.6:80, http://192.168.1.6:81  这里的IP是机器的物理IP.
+
+注意docker-compose.yaml中的这两行
+command: uwsgi --ini /code/backend/uwsgi_docker.ini
+    uwsgi_docker.ini里的主机IP要写成这里本文件中的ipv4_address: 10.0.0.10
+/usr/local/nginx/conf/nginx_docker.conf:/etc/nginx/nginx.conf
+    nginx配置文件的后端服务IP也要改成这个IP
+
 ```

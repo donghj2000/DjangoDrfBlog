@@ -1,0 +1,39 @@
+version: '3'
+services:
+  uwsgi:
+    # 制作的镜像名称
+    image: mypython:v1
+    ports:
+      - "8000:8000"
+    networks: 
+      django:
+        ipv4_address: 10.0.0.10
+    volumes: 
+     # 将项目挂载的容器中（uwsgi.ini配置文件一起放在了项目中）
+      - /home/donghj/blog:/code
+    # 使用命令启动uwsgi
+    stdin_open: true
+    tty: true
+    command: uwsgi --ini /code/backend/uwsgi_docker.ini
+  web:
+    image: nginx
+    depends_on:
+      - uwsgi
+    ports: 
+      # 将服务器端口与nginx端口做映射
+      - "80:80"
+    links:
+      - uwsgi
+    networks: 
+      django:
+        ipv4_address: 10.0.0.11
+    volumes: 
+      # 挂载配置文件，并将项目也挂载到nginx相关目录下
+      - /usr/local/nginx/conf/nginx_docker.conf:/etc/nginx/nginx.conf
+      - /home/donghj/blog:/home/donghj/blog
+# 创建一个网络，让两个docker互通
+networks: 
+  django:
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-uwsgi-deploy
+  labels: 
+    app: nginx-uwsgi-deploy
+spec:
+  selector:
+    matchLabels:
+      app: nginx-uwsgi
+  template:
+    metadata:
+      name: nginx-uwsgi
+      labels:
+        app: nginx-uwsgi
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: nginx-port1
+          containerPort: 80
+          hostPort: 80
+        - name: nginx-port2
+          containerPort: 81
+          hostPort: 81
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/nginx.conf
+        - name: nginx-data
+          mountPath: /home/donghj/blog
+      - name: uwsgi
+        image: mypython:v1
+        imagePullPolicy: Never
+        workingDir: /home/donghj/blog
+        ports:
+        - name: uwsgi-port
+          containerPort: 8000
+        volumeMounts:
+        - name: uwsgi-data
+          mountPath: /home/donghj/blog
+      nodeSelector:
+        disktype: ssd
+      volumes:
+      - name: nginx-conf
+        hostPath:
+          path: /usr/local/nginx/conf/nginx_k8s.conf
+          type: File
+      - name: nginx-data
+        hostPath:
+          path: /home/donghj/blog
+          type: Directory
+      - name: uwsgi-data
+        hostPath:
+          path: /home/donghj/blog
+          type: Directory

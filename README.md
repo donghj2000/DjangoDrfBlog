@@ -136,7 +136,7 @@ ps aux | grep uwsgi
 killall -s INT /usr/local/bin/uwsgi
 ```
 
-### docker环境下的部署
+### docker 环境下的部署
 ```
 安装 docker-ce　...
 安装 Docker Compose ...
@@ -153,5 +153,31 @@ command: uwsgi --ini /code/backend/uwsgi_docker.ini
     uwsgi_docker.ini里的主机IP要写成这里本文件中的ipv4_address: 10.0.0.10
 /usr/local/nginx/conf/nginx_docker.conf:/etc/nginx/nginx.conf
     nginx配置文件的后端服务IP也要改成这个IP
+```
+### k8s 环境下的部署
+```
+使用kubeadm安装k8s集群环境，版本1.23。此处安装了一个master(192.168.1.6) + 一个node(192.168.1.7)
+将镜像导出，拷贝到node上，否则在node上找不到镜像。
+docker save -o mypython_v1.tar mypython:v1
+scp mypython_v1.tar 192.168.1.7:/home/donghj/
+在node上导入：
+docker load < mypython_v1.tar
 
+在master上：
+部署deployment
+kubectl apply -f nginx-uwsgi-deploy.yaml
+暴露服务：
+kubectl apply -f nginx-uwsgi-svc.yaml
+
+查看服务：
+kubectl get svc:
+nginx-uwsgi   NodePort    10.98.194.44   <none>        80:80/TCP,81:81/TCP   45s
+说明服务已经成功的运行在80,81端口
+访问：http://192.168.1.7:80,http://192.168.1.7:81
+注意nginx-uwsgi-deployment.yaml中的　
+path: /usr/local/nginx/conf/nginx_k8s.conf
+nginx_k8s.conf配置文件的后端IP要写成localhost,uwsgi_k8s.ini文件里的IP也要写成localhost，
+因为把uwsgi和nginx部署到一个pod里，在同个pod里的不同容器使用localhost通信.
+
+##### 以上都是基于sqlite数据库，mysql数据库的部署暂未考虑。
 ```

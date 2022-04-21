@@ -71,3 +71,72 @@ djangorestframework-simplejwt==4.4.0，
 采用social_django，前端界面有入口，后端没有调试过。
 social_django需要PyJWT2.3，与 djangorestframework-jwt有冲突。通过修改djangorestframework-jwt使其适配PyJWT 2.3.
 ```
+
+# 部署
+
+### 编译安装 nginx
+```
+服务器：ubuntu 18.04
+
+编译安装 nginx
+sudo apt-get install gcc
+sudo apt-get install libpcre3 libpcre3-dev
+sudo apt-get install zlib1g zlib1g-dev
+sudo apt-get install openssl
+sudo apt-get install libssl-dev
+
+cd /usr/local
+mkdir nginx
+wget http://nginx.org/download/nginx-1.20.1.tar.gz
+tar -xvf nginx-1.20.1.tar.gz
+
+cd /usr/local/nginx-1.20.1
+./configure --prefix=/usr/local/nginx --with-http_ssl_module
+make
+make install
+
+配置文件  /usr/local/nginx/conf/nginx.conf
+# 配置了3个前端端口 80,81,82分别对应vue,react,react_koa前端
+# 配置了2个业务服务器端口 8000，3000，分别对应django,koa后端服务
+如果要开启ssl，需要申请证书。测试环境下可以自己生成证书
+
+查看防火墙是否关闭
+sudo ufw status
+关闭防火墙
+sudo ufw disable
+cd /usr/local/nginx/sbin
+启动：
+进入nginx的sbin目录，执行 ./nginx
+
+项目目录:
+/home/donghj/blog
+后端：
+/home/donghj/blog/backend
+前端
+/home/donghj/blog/frontend
+vue:
+/home/donghj/blog/frontend/dist_vue
+react:
+/home/donghj/blog/frontend/dist_react
+koa:
+/home/donghj/blog/frontend/dist_react_koa
+
+```
+### 安装uwsgi 和 python依赖包
+```
+pip install -r requirements.txt
+pip3 install -r requirements.txt
+
+安装 uwsgi
+pip3 install uwsgi
+sudo apt install uwsgi-core uwsgi-plugin-python3
+启动 uwsgi --ini uwsgi.ini --plugin=python3
+杀掉 uwsgi
+ps aux | grep uwsgi
+killall -s INT /usr/local/bin/uwsgi
+```
+
+
+
+```
+```

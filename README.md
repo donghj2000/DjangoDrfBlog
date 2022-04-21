@@ -179,5 +179,5 @@ path: /usr/local/nginx/conf/nginx_k8s.conf
 nginx_k8s.conf配置文件的后端IP要写成localhost,uwsgi_k8s.ini文件里的IP也要写成localhost，
 因为把uwsgi和nginx部署到一个pod里，在同个pod里的不同容器使用localhost通信.
 
-##### 以上都是基于sqlite数据库，mysql数据库的部署暂未考虑。
+以上都是基于sqlite数据库，mysql数据库的部署暂未考虑。
 ```

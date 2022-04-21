@@ -136,7 +136,7 @@ ps aux | grep uwsgi
 killall -s INT /usr/local/bin/uwsgi
 ```
 
-### docker 安装
+### docker环境下的部署
 ```
 安装 docker-ce　...
 安装 Docker Compose ...

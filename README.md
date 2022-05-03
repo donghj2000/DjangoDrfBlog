@@ -143,8 +143,7 @@ celery -A project worker --loglevel=info -P enventlet
 
 ### docker 环境下的部署
 ```
-安装 docker-ce　...
-安装 Docker Compose ...
+安装 docker-ce，Docker Compose。
 
 生成镜像
 cd docker_k8s

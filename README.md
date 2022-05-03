@@ -1,7 +1,9 @@
 # DjangoDrfBlog
 基于django,restframework的博客后端，包括注册/登录，个人信息修改，文章列表，全文搜索等。
 需要python 3.6 以上。
-发送邮件使用celery异步任务实现，如果要调试发送邮件，需要开启celery,进入到项目根目录
+发送邮件使用celery异步任务实现，如果要调试发送邮件，需要开启celery,
+1，开启redis
+2，进入到项目根目录
 celery -A project worker --loglevel=info -P enventlet
 
 ### vscode调试
@@ -137,7 +139,8 @@ sudo apt install uwsgi-core uwsgi-plugin-python3
 ps aux | grep uwsgi
 killall -s INT /usr/local/bin/uwsgi
 
-开启celery,进入到项目根目录
+1，开启redis
+2，进入到项目根目录
 celery -A project worker --loglevel=info -P enventlet
 ```
 

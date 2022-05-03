@@ -1,6 +1,8 @@
 # DjangoDrfBlog
 基于django,restframework的博客后端，包括注册/登录，个人信息修改，文章列表，全文搜索等。
 需要python 3.6 以上。
+发送邮件使用celery异步任务实现，如果要调试发送邮件，需要开启celery,进入到项目根目录
+celery -A project worker --loglevel=info -P enventlet
 
 ### vscode调试
 ```
@@ -118,7 +120,7 @@ vue:
 /home/donghj/blog/frontend/dist_vue
 react:
 /home/donghj/blog/frontend/dist_react
-koa:
+koa:(需要配合koa后端)
 /home/donghj/blog/frontend/dist_react_koa
 
 ```
@@ -134,6 +136,9 @@ sudo apt install uwsgi-core uwsgi-plugin-python3
 杀掉 uwsgi
 ps aux | grep uwsgi
 killall -s INT /usr/local/bin/uwsgi
+
+开启celery,进入到项目根目录
+celery -A project worker --loglevel=info -P enventlet
 ```
 
 ### docker 环境下的部署
@@ -153,6 +158,8 @@ command: uwsgi --ini /code/backend/uwsgi_docker.ini
     uwsgi_docker.ini里的主机IP要写成这里本文件中的ipv4_address: 10.0.0.10
 /usr/local/nginx/conf/nginx_docker.conf:/etc/nginx/nginx.conf
     nginx配置文件的后端服务IP也要改成这个IP
+    
+备注：镜像里没有加入celery启动的命令。
 ```
 ### k8s 环境下的部署
 ```

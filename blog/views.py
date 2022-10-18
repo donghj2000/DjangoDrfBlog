@@ -80,6 +80,15 @@ class ArticleViewSet(BaseModelViewSet):
     filter_backends = (DjangoFilterBackend,filters.SearchFilter)
     search_fields = ('title',)
 
+    def get_queryset(self):
+        params = self.request.query_params
+        if 'tag' in params:
+            tag_id = params.get('tag', 1)
+            queryset = Tag.objects.get(id=tag_id).tag_articles.all()
+        else:
+            queryset = super(ArticleViewSet, self).get_queryset()
+        return queryset
+    
     def filter_queryset(self, queryset):
         #self.filterset_fields.remove('catalog')
         queryset = super(ArticleViewSet, self).filter_queryset(queryset)

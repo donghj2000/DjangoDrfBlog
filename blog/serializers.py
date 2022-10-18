@@ -125,12 +125,31 @@ class CommentSerializer(serializers.ModelSerializer):
             article = obj.article
         return {'id': article.id, 'title': article.title}
 
-    @staticmethod
-    def get_comment_replies(obj: Comment):
+    def getReplies(self,replies):
+        comment_replies = []
+        if len(replies)==0:
+            return []
+        for reply in replies:
+            if reply.user != None:
+                comment_replies.append({
+                    "id":              reply.id,
+                    "content":         reply.content,
+                    "user_info":       {
+                                        "id":     reply.user.id,
+                                        "name":   reply.user.nickname or reply.user.username,
+                                        "avatar": reply.user.avatar,   
+                                        "role":   "Admin" if reply.user.is_superuser else "" 
+                                    },
+                    "created_at":      reply.created_at,
+                    "comment_replies": self.getReplies(reply.comment_reply.all()) })
+        return comment_replies 
+
+    def get_comment_replies(self, obj: Comment):
         if not obj.comment_reply:
             return []
         else:
             replies = obj.comment_reply.all()
+
         return [{
             'id': reply.id,
             'content': reply.content,
@@ -140,7 +159,8 @@ class CommentSerializer(serializers.ModelSerializer):
                 'avatar': reply.user.avatar,   
                 'role': "Admin" if reply.user.is_superuser  else "",
             },
-            'created_at': reply.created_at
+            'created_at': reply.created_at,
+            "comment_replies": self.getReplies(reply.comment_reply.all())
         } for reply in replies]
 
 class MessageSerializer(serializers.ModelSerializer):
